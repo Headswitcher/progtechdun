@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.progtech.headswitcher.controller.MainMenuController">
+   <children>
+      <Label layoutX="110.0" layoutY="14.0" text="Dungeon Crawl" />
+      <Button layoutX="119.0" layoutY="56.0" mnemonicParsing="false" text="Ranglista" />
+      <Button layoutX="125.0" layoutY="81.0" mnemonicParsing="false" text="Készítő" />
+      <Button fx:id="exitButton" layoutX="124.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleExit" text="Kilépés" />
+      <Button layoutX="106.0" layoutY="31.0" mnemonicParsing="false" text="Játék kezdete" />
+   </children>
+</AnchorPane>
