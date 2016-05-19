@@ -2,29 +2,44 @@ package hu.unideb.progtech.headswitcher.game.utility;
 
 public class Room extends GameObject {
 
+	private Long posx;
+	private Long posy;
 	private Boolean north;
 	private Boolean west;
 	private Boolean east;
 	private Boolean south;
-	private Integer depth;
+	private Long depth;
 	private Monster roomMonster;
+	private String event;
 
-	public Room(Boolean north, Boolean west, Boolean east, Boolean south, Integer depth, Monster roomMonster) {
+	public Room(Long posx, Long posy, Boolean north, Boolean west, Boolean east, Boolean south, Long depth,
+			Monster roomMonster, String event) {
 		super();
+		this.posx = posx;
+		this.posy = posy;
 		this.north = north;
 		this.west = west;
 		this.east = east;
 		this.south = south;
 		this.depth = depth;
 		this.roomMonster = roomMonster;
+		this.event = event;
 	}
 
-	public Monster getRoomMonster() {
-		return roomMonster;
+	public Long getPosx() {
+		return posx;
 	}
 
-	public void setRoomMonster(Monster roomMonster) {
-		this.roomMonster = roomMonster;
+	public void setPosx(Long posx) {
+		this.posx = posx;
+	}
+
+	public Long getPosy() {
+		return posy;
+	}
+
+	public void setPosy(Long posy) {
+		this.posy = posy;
 	}
 
 	public Boolean getNorth() {
@@ -59,12 +74,28 @@ public class Room extends GameObject {
 		this.south = south;
 	}
 
-	public Integer getDepth() {
+	public Long getDepth() {
 		return depth;
 	}
 
-	public void setDepth(Integer depth) {
+	public void setDepth(Long depth) {
 		this.depth = depth;
+	}
+
+	public Monster getRoomMonster() {
+		return roomMonster;
+	}
+
+	public void setRoomMonster(Monster roomMonster) {
+		this.roomMonster = roomMonster;
+	}
+
+	public String getEvent() {
+		return event;
+	}
+
+	public void setEvent(String event) {
+		this.event = event;
 	}
 
 }
