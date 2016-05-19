@@ -52,7 +52,7 @@ public class LoginController implements Initializable {
 		Stage stage;
 		Parent root;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/Register.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/menu/Register.fxml"));
 			root = loader.load();
 			loader.<RegisterController> getController();
 			stage = (Stage) registerButton.getScene().getWindow();
@@ -98,7 +98,7 @@ public class LoginController implements Initializable {
 		Stage stage;
 		Parent root;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/MainMenu.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/menu/MainMenu.fxml"));
 			root = loader.load();
 			loader.<MainMenuController> getController();
 			stage = (Stage) loginButton.getScene().getWindow();

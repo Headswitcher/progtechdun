@@ -91,7 +91,7 @@ public class RegisterController implements Initializable {
 			Stage stage;
 			Parent root;
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/Login.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/menu/Login.fxml"));
 			root = loader.load();
 			loader.<LoginController> getController();
 			stage = (Stage) registerButton.getScene().getWindow();
@@ -108,12 +108,13 @@ public class RegisterController implements Initializable {
 	private void registerUser() {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Oracle");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-
 		try {
+			
 			PlayerService playerService = new PlayerServiceImpl(entityManager);
 			entityManager.getTransaction().begin();
 			playerService.createPlayer(userName.getText(), password.getText());
 			entityManager.getTransaction().commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
