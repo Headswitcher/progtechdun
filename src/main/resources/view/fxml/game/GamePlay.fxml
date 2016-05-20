@@ -42,13 +42,13 @@
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin></Label>
-      <Label text="Szoba:" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Label fx:id="roomPosXLabel" text="PosX" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+      <Label text="Szoba:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+      <Label fx:id="roomPosXLabel" text="PosX" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
          <padding>
             <Insets left="10.0" />
          </padding>
       </Label>
-      <Label fx:id="roomPosYLabel" text="PosY" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+      <Label fx:id="roomPosYLabel" text="PosY" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -57,5 +57,6 @@
          </padding>
       </Label>
       <Label text="Szörny!" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Label fx:id="playerGold" text="Gold" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
 	</children>
 </GridPane>

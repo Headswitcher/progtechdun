@@ -3,6 +3,7 @@ package hu.unideb.progtech.headswitcher.controller;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import hu.unideb.progtech.headswitcher.game.utility.Adventurer;
@@ -15,6 +16,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
 public class GamePlayController implements Initializable {
@@ -28,6 +31,9 @@ public class GamePlayController implements Initializable {
 	private Boolean west;
 	private Boolean south;
 	private Boolean east;
+
+	@FXML
+	private Label playerGold;
 
 	@FXML
 	private Label roomPosXLabel;
@@ -67,7 +73,7 @@ public class GamePlayController implements Initializable {
 		rooms = new LinkedList<>();
 		actualRoom = new Room(0L, 0L, true, false, false, false, 0L, null, "nothing");
 		rooms.add(actualRoom);
-		player = new Adventurer("Majdkivalasztja", 3000L, 50L, 0L);
+		player = new Adventurer("Majdkivalasztja", 3000L, 3000L, 50L, 5L);
 		diceRoll = new DiceRoll();
 
 		nextRoomTest();
@@ -105,6 +111,7 @@ public class GamePlayController implements Initializable {
 	private void handleUp(ActionEvent event) {
 		setNextRoomForNorth();
 		setRoomLabel();
+		nextRoomTest();
 		roomEventHandler();
 
 	}
@@ -113,6 +120,7 @@ public class GamePlayController implements Initializable {
 	private void handleDown(ActionEvent event) {
 		setNextRoomForSouth();
 		setRoomLabel();
+		nextRoomTest();
 		roomEventHandler();
 	}
 
@@ -120,6 +128,7 @@ public class GamePlayController implements Initializable {
 	private void handleRight(ActionEvent event) {
 		setNextRoomForEast();
 		setRoomLabel();
+		nextRoomTest();
 		roomEventHandler();
 	}
 
@@ -127,14 +136,15 @@ public class GamePlayController implements Initializable {
 	private void handleLeft(ActionEvent event) {
 		setNextRoomForWest();
 		setRoomLabel();
+		nextRoomTest();
 		roomEventHandler();
 	}
 
 	@FXML
 	private void handleAttack(ActionEvent event) {
 		actualRoom.getRoomMonster().setHealthPoint(actualRoom.getRoomMonster().getHealthPoint() - player.getDamage());
-		setMonsterHpLabel();
-		if (actualRoom.getRoomMonster().getHealthPoint() >= 0) {
+
+		if (actualRoom.getRoomMonster().getHealthPoint() > 0) {
 			player.setHealthPoint(player.getHealthPoint() - actualRoom.getRoomMonster().getDamage());
 			setPlayerLabels();
 		}
@@ -145,7 +155,19 @@ public class GamePlayController implements Initializable {
 		if (actualRoom.getRoomMonster().getHealthPoint() <= 0) {
 			nextRoomTest();
 			disableActions();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Győzelem!");
+			alert.setHeaderText(
+					"Sikeresen legyőzted a szörnyet zsákmányod:" + actualRoom.getRoomMonster().getGold() + "!");
+			alert.showAndWait();
+			addGoldToPlayer();
+			setPlayerLabels();
+			for (Room room : rooms)
+				if ((room.getPosx().equals(actualRoom.getPosx())) && room.getPosy().equals(actualRoom.getPosy()))
+					room.setEvent("nothing");
 		}
+
+		setMonsterHpLabel();
 	}
 
 	private void setMonsterHpLabel() {
@@ -185,28 +207,49 @@ public class GamePlayController implements Initializable {
 			if (north.equals(false) && west.equals(false) && east.equals(false))
 				setNextRoomForNorth();
 
-			if (diceRoll.roll(0, 10) == 1) {
+			int rolledValue = diceRoll.roll(1, 5);
+
+			switch (rolledValue) {
+			case 1: {
 				Monster m = spawnMonster();
 				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
 						actualRoom.getDepth() + 1, m, "monster");
 				System.out.println(actualRoom.getRoomMonster());
 				rooms.add(actualRoom);
 
-			} else {
+				break;
+			}
+			case 2: {
+				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
+						actualRoom.getDepth() + 1, null, "altar");
+				rooms.add(actualRoom);
+				break;
+			}
+
+			case 3: {
 				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
 						actualRoom.getDepth() + 1, null, "nothing");
 				rooms.add(actualRoom);
+				break;
+			}
+			case 4: {
+				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
+						actualRoom.getDepth() + 1, null, "master");
+				rooms.add(actualRoom);
+				break;
+			}
+			case 5: {
+				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
+						actualRoom.getDepth() + 1, null, "shop");
+				rooms.add(actualRoom);
+				break;
+			}
 			}
 
-		}
-	}
+			System.out.println(rolledValue);
+			System.out.println(actualRoom.getEvent());
 
-	private Monster spawnMonster() {
-		Long hp = actualRoom.getDepth() * 20;
-		Long dmg = (long) (actualRoom.getDepth() * 1.4);
-		Long gold = actualRoom.getDepth() * 10;
-		Monster m = new Monster(hp, dmg, gold);
-		return m;
+		}
 	}
 
 	private void setNextRoomForSouth() {
@@ -230,19 +273,46 @@ public class GamePlayController implements Initializable {
 			if (south.equals(false) && west.equals(false) && east.equals(false))
 				setNextRoomForSouth();
 
-			if (diceRoll.roll(0, 10) == 1) {
+			int rolledValue = diceRoll.roll(1, 5);
+
+			switch (rolledValue) {
+			case 1: {
 				Monster m = spawnMonster();
 				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
 						actualRoom.getDepth() + 1, m, "monster");
 				System.out.println(actualRoom.getRoomMonster());
 				rooms.add(actualRoom);
+				break;
+			}
+			case 2: {
+				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
+						actualRoom.getDepth() + 1, null, "altar");
+				rooms.add(actualRoom);
+				break;
+			}
 
-			} else {
+			case 3: {
 				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
 						actualRoom.getDepth() + 1, null, "nothing");
 				rooms.add(actualRoom);
+				break;
+			}
+			case 4: {
+				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
+						actualRoom.getDepth() + 1, null, "master");
+				rooms.add(actualRoom);
+				break;
+			}
+			case 5: {
+				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
+						actualRoom.getDepth() + 1, null, "shop");
+				rooms.add(actualRoom);
+				break;
+			}
 			}
 
+			System.out.println(rolledValue);
+			System.out.println(actualRoom.getEvent());
 		}
 
 	}
@@ -269,18 +339,46 @@ public class GamePlayController implements Initializable {
 			if (north.equals(false) && south.equals(false) && east.equals(false))
 				setNextRoomForEast();
 
-			if (diceRoll.roll(0, 10) == 1) {
+			int rolledValue = diceRoll.roll(1, 5);
+
+			switch (rolledValue) {
+			case 1: {
 				Monster m = spawnMonster();
 				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
 						actualRoom.getDepth() + 1, m, "monster");
 				System.out.println(actualRoom.getRoomMonster());
 				rooms.add(actualRoom);
+				break;
+			}
+			case 2: {
+				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
+						actualRoom.getDepth() + 1, null, "altar");
+				rooms.add(actualRoom);
+				break;
+			}
 
-			} else {
+			case 3: {
 				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
 						actualRoom.getDepth() + 1, null, "nothing");
 				rooms.add(actualRoom);
+				break;
 			}
+			case 4: {
+				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
+						actualRoom.getDepth() + 1, null, "master");
+				rooms.add(actualRoom);
+				break;
+			}
+			case 5: {
+				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
+						actualRoom.getDepth() + 1, null, "shop");
+				rooms.add(actualRoom);
+				break;
+			}
+			}
+
+			System.out.println(rolledValue);
+			System.out.println(actualRoom.getEvent());
 
 		}
 
@@ -307,18 +405,46 @@ public class GamePlayController implements Initializable {
 			if (north.equals(false) && south.equals(false) && west.equals(false))
 				setNextRoomForEast();
 
-			if (diceRoll.roll(0, 10) == 1) {
+			int rolledValue = diceRoll.roll(1, 5);
+
+			switch (rolledValue) {
+			case 1: {
 				Monster m = spawnMonster();
 				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
 						actualRoom.getDepth() + 1, m, "monster");
-				System.out.println(actualRoom.getRoomMonster());
 				rooms.add(actualRoom);
+				break;
+			}
+			case 2: {
+				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
+						actualRoom.getDepth() + 1, null, "altar");
+				rooms.add(actualRoom);
+				break;
+			}
 
-			} else {
+			case 3: {
 				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
 						actualRoom.getDepth() + 1, null, "nothing");
 				rooms.add(actualRoom);
+				break;
 			}
+			case 4: {
+				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
+						actualRoom.getDepth() + 1, null, "master");
+				rooms.add(actualRoom);
+				break;
+			}
+			case 5: {
+				actualRoom = new Room(newRoomPosX, actualRoom.getPosy(), north, west, east, south,
+						actualRoom.getDepth() + 1, null, "shop");
+				rooms.add(actualRoom);
+				break;
+			}
+			}
+			System.out.println(north);
+			System.out.println(south);
+			System.out.println(west);
+			System.out.println(east);
 
 		}
 	}
@@ -342,6 +468,7 @@ public class GamePlayController implements Initializable {
 	private void setPlayerLabels() {
 		playerHealthPoints.setText("HP: " + String.valueOf(player.getHealthPoint()));
 		playerDamage.setText("DMG: " + String.valueOf(player.getDamage()));
+		playerGold.setText(player.getGold().toString());
 	}
 
 	private void disableControls() {
@@ -383,10 +510,24 @@ public class GamePlayController implements Initializable {
 	}
 
 	private void onAltarEvent() {
-		// TODO Auto-generated method stub
-
 		System.out.println("Event:	Altar");
 
+		if (player.getHealthPoint() != player.getMaxHealthPoint()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Egy altár!");
+			alert.setHeaderText("Visszanyerted az életerődet!");
+			alert.showAndWait();
+			player.setHealthPoint(player.getMaxHealthPoint());
+			for (Room room : rooms)
+				if ((room.getPosx().equals(actualRoom.getPosx())) && room.getPosy().equals(actualRoom.getPosy()))
+					room.setEvent("nothing");
+			setPlayerLabels();
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Egy altár!");
+			alert.setHeaderText("Most tele van az életerőd térj vissza ide ha szükséged van rá!");
+			alert.showAndWait();
+		}
 	}
 
 	private void onNothingEvent() {
@@ -396,27 +537,96 @@ public class GamePlayController implements Initializable {
 	}
 
 	private void onShopEvent() {
-		// TODO Auto-generated method stub
+
+		Long hpPotionPrice = actualRoom.getDepth() * 20;
+
+		if (player.getGold() >= hpPotionPrice) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Shop");
+			alert.setHeaderText("Találkoztál egy kereskedővel aki egy gyógyító italt árul (50% élet)");
+			alert.setContentText("Szeretnél venni eggyet kettőt?");
+
+			ButtonType buttonTypeWantOne = new ButtonType("Kérek egyet," + hpPotionPrice + " gold",
+					ButtonData.CANCEL_CLOSE);
+			ButtonType buttonTypeDontWant = new ButtonType("Nem kérek", ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().setAll(buttonTypeWantOne, buttonTypeDontWant);
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeWantOne) {
+				player.setHealthPoint(player.getHealthPoint() + (player.getMaxHealthPoint() / 2));
+				if (player.getHealthPoint() > player.getMaxHealthPoint())
+					player.setHealthPoint(player.getMaxHealthPoint());
+
+				player.setGold(player.getGold() - hpPotionPrice);
+				setPlayerLabels();
+			}
+		} else {
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Shop");
+			alert.setHeaderText("Sajnos nincs elgendő pénzed hogy életerő italt vásárolj!!");
+			alert.setContentText("Ital ára: " + hpPotionPrice + " A te pénzed: " + player.getGold());
+			alert.showAndWait();
+
+		}
 		System.out.println("Event:	Shop");
 
 	}
 
 	private void onMasterEvent() {
-		// TODO Auto-generated method stub
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Mester");
+		alert.setHeaderText("Találkoztál egy mesterrel aki hajlandó tanítani");
+		alert.setContentText("Válassz a két lehetőség közül eggyet");
+
+		ButtonType buttonTypeMaxHp = new ButtonType("Élet", ButtonData.CANCEL_CLOSE);
+		ButtonType buttonTypeDmg = new ButtonType("Sebzés", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeMaxHp, buttonTypeDmg);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeMaxHp) {
+			player.setMaxHealthPoint(player.getMaxHealthPoint() + (actualRoom.getDepth() * 5));
+			setPlayerLabels();
+		} else if (result.get() == buttonTypeDmg) {
+			player.setDamage(player.getDamage() + actualRoom.getDepth());
+			setPlayerLabels();
+		}
+
+		for (Room room : rooms)
+			if ((room.getPosx().equals(actualRoom.getPosx())) && room.getPosy().equals(actualRoom.getPosy()))
+				room.setEvent("nothing");
+
 		System.out.println("Event:	Master");
 
 	}
 
 	private void onMonsterEvent() {
-		// TODO Auto-generated method stub
-		System.out.println("Event:	Monster");
 
-		if (actualRoom.getRoomMonster().getHealthPoint() > 0) {
-			setMonsterHpLabel();
-			disableControls();
-			enableActions();
-		} else
-			nextRoomTest();
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("SZÖRNYETEG");
+		alert.setHeaderText("Egy szörnyeteg!!");
+		alert.setContentText("Hogy tovább juss lekell győznöd!!");
+		alert.showAndWait();
+
+		setMonsterHpLabel();
+		disableControls();
+		enableActions();
+
+		System.out.println("Event:	Monster");
 	}
 
+	private Monster spawnMonster() {
+		Long hp = actualRoom.getDepth() * 20;
+		Long dmg = (long) (actualRoom.getDepth() * 1.4);
+		Long gold = actualRoom.getDepth() * 10;
+		Monster m = new Monster(hp, gold, dmg);
+		return m;
+	}
+
+	private void addGoldToPlayer() {
+		player.setGold(player.getGold() + actualRoom.getRoomMonster().getGold());
+
+	}
 }

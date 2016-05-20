@@ -3,12 +3,12 @@ package hu.unideb.progtech.headswitcher.game.utility;
 public class Monster {
 
 	private Long healthPoint;
-	private Long experience;
+	private Long gold;
 	private Long damage;
 
-	public Monster(Long healthPoint, Long experience, Long damage) {
+	public Monster(Long healthPoint, Long gold, Long damage) {
 		this.healthPoint = healthPoint;
-		this.experience = experience;
+		this.gold = gold;
 		this.damage = damage;
 	}
 
@@ -20,12 +20,12 @@ public class Monster {
 		this.healthPoint = healthPoint;
 	}
 
-	public Long getExperience() {
-		return experience;
+	public Long getGold() {
+		return gold;
 	}
 
-	public void setExperience(Long experience) {
-		this.experience = experience;
+	public void setGold(Long experience) {
+		this.gold = experience;
 	}
 
 	public Long getDamage() {

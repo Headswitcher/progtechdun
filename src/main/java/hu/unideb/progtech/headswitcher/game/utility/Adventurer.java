@@ -3,13 +3,15 @@ package hu.unideb.progtech.headswitcher.game.utility;
 public class Adventurer {
 
 	private String name;
+	private Long maxHealthPoint;
 	private Long healthPoint;
 	private Long damage;
 	private Long gold;
 
-	public Adventurer(String name, Long healthPoint, Long damage, Long gold) {
+	public Adventurer(String name, Long maxHealthPoint, Long healthPoint, Long damage, Long gold) {
 		super();
 		this.name = name;
+		this.maxHealthPoint = maxHealthPoint;
 		this.healthPoint = healthPoint;
 		this.damage = damage;
 		this.gold = gold;
@@ -21,6 +23,14 @@ public class Adventurer {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Long getMaxHealthPoint() {
+		return maxHealthPoint;
+	}
+
+	public void setMaxHealthPoint(Long maxHealthPoint) {
+		this.maxHealthPoint = maxHealthPoint;
 	}
 
 	public Long getHealthPoint() {
