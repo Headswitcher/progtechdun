@@ -27,11 +27,6 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public Player findPlayerByName(String username) {
-		return entityManager.find(Player.class, username);
-	}
-
-	@Override
 	public List<Player> getAllPlayer() {
 		TypedQuery<Player> query = entityManager
 				.createQuery("SELECT f from hu.unideb.progtech.headswitcher.entities.Player f", Player.class);

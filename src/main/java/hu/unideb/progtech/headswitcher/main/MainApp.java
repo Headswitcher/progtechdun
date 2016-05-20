@@ -22,9 +22,9 @@ public class MainApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	
-	
-	private static ObservableList<Player> PlayersData = FXCollections.observableArrayList();
+
+	private static ObservableList<Player> playersData = FXCollections.observableArrayList();
+	private static String activeUser;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -83,11 +83,19 @@ public class MainApp extends Application {
 	}
 
 	public static ObservableList<Player> getPlayersData() {
-		return PlayersData;
+		return playersData;
 	}
 
 	public static void setPlayersData(ObservableList<Player> playersData) {
-		PlayersData = playersData;
+		MainApp.playersData = playersData;
+	}
+
+	public static String getActiveUser() {
+		return activeUser;
+	}
+
+	public static void setActiveUser(String activeUser) {
+		MainApp.activeUser = activeUser;
 	}
 
 	public static void updatePlayersData() {
@@ -96,10 +104,10 @@ public class MainApp extends Application {
 		try {
 			System.out.println();
 			PlayerService playerService = new PlayerServiceImpl(entityManager);
-			PlayersData.clear();
+			playersData.clear();
 			playerService.getAllPlayer().stream().forEach(l -> {
-				PlayersData.add(l);
-				System.out.println(l.getUsername()+ " " + l.getPassword() );
+				playersData.add(l);
+				System.out.println(l.getUsername() + " " + l.getPassword());
 			});
 
 		} catch (Exception e) {
@@ -109,8 +117,5 @@ public class MainApp extends Application {
 			entityManagerFactory.close();
 		}
 	}
-
-	
-	
 
 }

@@ -1,24 +1,36 @@
 package hu.unideb.progtech.headswitcher.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import hu.unideb.progtech.headswitcher.game.utility.Adventurer;
 import hu.unideb.progtech.headswitcher.game.utility.DiceRoll;
 import hu.unideb.progtech.headswitcher.game.utility.Monster;
 import hu.unideb.progtech.headswitcher.game.utility.Room;
+import hu.unideb.progtech.headswitcher.main.MainApp;
+import hu.unideb.progtech.headswitcher.service.HighScoreServiceImpl;
+import hu.unideb.progtech.headswitcher.service.interfaces.HighScoreService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class GamePlayController implements Initializable {
 
@@ -26,7 +38,7 @@ public class GamePlayController implements Initializable {
 	private List<Room> rooms;
 	private Room actualRoom;
 	private Adventurer player;
-
+	
 	private Boolean north;
 	private Boolean west;
 	private Boolean south;
@@ -73,7 +85,7 @@ public class GamePlayController implements Initializable {
 		rooms = new LinkedList<>();
 		actualRoom = new Room(0L, 0L, true, false, false, false, 0L, null, "nothing");
 		rooms.add(actualRoom);
-		player = new Adventurer("Majdkivalasztja", 3000L, 3000L, 50L, 5L);
+		player = new Adventurer(250L, 250L, 50L, 5L);
 		diceRoll = new DiceRoll();
 
 		nextRoomTest();
@@ -178,10 +190,29 @@ public class GamePlayController implements Initializable {
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("A vég!");
-		alert.setHeaderText("Sajnos legyőztek téged a pontod a következő:");
+		alert.setHeaderText("Sajnos legyőztek téged a pontod a következő volt: " + player.getGold());
 		alert.showAndWait();
 
-		// Todo Elirányítás leaderboardra és beírni a számát
+		setHighScore();
+		goMainMenu();
+
+	}
+
+	private void goMainMenu() {
+
+		Stage stage;
+		Parent root;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/menu/MainMenu.fxml"));
+			root = loader.load();
+			loader.<MainMenuController> getController();
+			stage = (Stage) attackButton.getScene().getWindow();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -532,8 +563,6 @@ public class GamePlayController implements Initializable {
 
 	private void onNothingEvent() {
 		System.out.println("Event:	Nothing");
-		nextRoomTest();
-
 	}
 
 	private void onShopEvent() {
@@ -628,5 +657,23 @@ public class GamePlayController implements Initializable {
 	private void addGoldToPlayer() {
 		player.setGold(player.getGold() + actualRoom.getRoomMonster().getGold());
 
+	}
+
+	private void setHighScore() {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Oracle");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		try {
+
+			HighScoreService hs = new HighScoreServiceImpl(entityManager);
+			entityManager.getTransaction().begin();
+			hs.createHighScore(MainApp.getActiveUser(), player.getGold());
+			entityManager.getTransaction().commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			entityManager.close();
+			entityManagerFactory.close();
+		}
 	}
 }

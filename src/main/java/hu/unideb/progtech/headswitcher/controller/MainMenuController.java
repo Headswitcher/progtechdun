@@ -61,6 +61,24 @@ public class MainMenuController implements Initializable {
 
 	}
 
+	@FXML
+	private void handleLeaderboard(ActionEvent event) {
+		System.out.println("sometihingasdpl");
+		Stage stage;
+		Parent root;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/fxml/menu/HighScore.fxml"));
+			root = loader.load();
+			loader.<HighScoreController> getController();
+			stage = (Stage) leaderboardsButton.getScene().getWindow();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 	}

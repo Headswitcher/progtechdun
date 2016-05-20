@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import hu.unideb.progtech.headswitcher.entities.Player;
 import hu.unideb.progtech.headswitcher.main.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -84,9 +85,14 @@ public class LoginController implements Initializable {
 
 		if (MainApp.getPlayersData().stream()
 				.filter(l -> ((userName.equalsIgnoreCase(l.getUsername())) && (password.equals(l.getPassword()))))
-				.count() > 0)
+				.count() > 0) {
+			// anymatchra
+			for (Player users : MainApp.getPlayersData()) {
+				if (users.getUsername().equals(userName) && users.getPassword().equals(password))
+					MainApp.setActiveUser(users.getUsername());
+			}
 			goMainMenu(event);
-		else {
+		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Hibás felhasználónév vagy jelszó");

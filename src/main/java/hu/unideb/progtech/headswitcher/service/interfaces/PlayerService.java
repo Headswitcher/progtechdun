@@ -8,7 +8,5 @@ public interface PlayerService {
 
 	public void createPlayer(String username, String password);
 
-	public Player findPlayerByName(String username);
-
 	public List<Player> getAllPlayer();
 }

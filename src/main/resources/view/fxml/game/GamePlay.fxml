@@ -7,56 +7,95 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.progtech.headswitcher.controller.GamePlayController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="hu.unideb.progtech.headswitcher.controller.GamePlayController">
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+			prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+			prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+			prefWidth="100.0" />
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0"
+			vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0"
+			vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0"
+			vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0"
+			vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0"
+			vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
-		<Button fx:id="leftButton" mnemonicParsing="false" onAction="#handleLeft" prefHeight="80.0" prefWidth="40.0" text="&lt;" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-		<Button fx:id="upButton" mnemonicParsing="false" onAction="#handleUp" prefHeight="40.0" prefWidth="200.0" text="^" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-		<Button fx:id="rightButton" mnemonicParsing="false" onAction="#handleRight" prefHeight="138.0" prefWidth="40.0" text="&gt;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-		<Button fx:id="downButton" mnemonicParsing="false" onAction="#handleDown" prefHeight="41.0" prefWidth="200.0" text="v" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-		<Button fx:id="attackButton" mnemonicParsing="false" onAction="#handleAttack" prefHeight="25.0" prefWidth="86.0" text="Button" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Label fx:id="playerHealthPoints" text="HP:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-         <padding>
-            <Insets left="10.0" />
-         </padding></Label>
-      <Label fx:id="playerDamage" text="DMG:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-         <padding>
-            <Insets right="10.0" />
-         </padding></Label>
-      <Label fx:id="monsterDamage" text="DMG:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
-         <GridPane.margin>
-            <Insets right="10.0" />
-         </GridPane.margin></Label>
-      <Label fx:id="monsterHealthPoints" text="HP:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin></Label>
-      <Label text="Szoba:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
-      <Label fx:id="roomPosXLabel" text="PosX" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </Label>
-      <Label fx:id="roomPosYLabel" text="PosY" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets right="10.0" />
-         </padding>
-      </Label>
-      <Label text="Szörny!" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Label fx:id="playerGold" text="Gold" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+		<Button fx:id="leftButton" mnemonicParsing="false" onAction="#handleLeft"
+			prefHeight="80.0" prefWidth="40.0" text="&lt;" GridPane.halignment="RIGHT"
+			GridPane.rowIndex="2" />
+		<Button fx:id="upButton" mnemonicParsing="false" onAction="#handleUp"
+			prefHeight="40.0" prefWidth="200.0" text="^" GridPane.columnIndex="1"
+			GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+		<Button fx:id="rightButton" mnemonicParsing="false" onAction="#handleRight"
+			prefHeight="138.0" prefWidth="40.0" text="&gt;" GridPane.columnIndex="2"
+			GridPane.rowIndex="2" />
+		<Button fx:id="downButton" mnemonicParsing="false" onAction="#handleDown"
+			prefHeight="41.0" prefWidth="200.0" text="v" GridPane.columnIndex="1"
+			GridPane.rowIndex="3" GridPane.valignment="TOP" />
+		<Button fx:id="attackButton" mnemonicParsing="false" onAction="#handleAttack"
+			prefHeight="25.0" prefWidth="86.0" text="Button" textAlignment="CENTER"
+			GridPane.columnIndex="1" GridPane.halignment="CENTER"
+			GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+		<Label fx:id="playerHealthPoints" text="HP:"
+			GridPane.columnIndex="1" GridPane.halignment="LEFT"
+			GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+			<padding>
+				<Insets left="10.0" />
+			</padding>
+		</Label>
+		<Label fx:id="playerDamage" text="DMG:" GridPane.columnIndex="1"
+			GridPane.halignment="RIGHT" GridPane.rowIndex="3"
+			GridPane.valignment="BOTTOM">
+			<padding>
+				<Insets right="10.0" />
+			</padding>
+		</Label>
+		<Label fx:id="monsterDamage" text="DMG:" GridPane.columnIndex="1"
+			GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+			<GridPane.margin>
+				<Insets right="10.0" />
+			</GridPane.margin>
+		</Label>
+		<Label fx:id="monsterHealthPoints" text="HP:"
+			GridPane.columnIndex="1" GridPane.halignment="LEFT"
+			GridPane.valignment="BOTTOM">
+			<GridPane.margin>
+				<Insets left="10.0" />
+			</GridPane.margin>
+		</Label>
+		<Label text="Szoba:" GridPane.columnIndex="1"
+			GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+		<Label fx:id="roomPosXLabel" text="PosX" GridPane.columnIndex="1"
+			GridPane.halignment="LEFT" GridPane.valignment="TOP">
+			<padding>
+				<Insets left="10.0" />
+			</padding>
+		</Label>
+		<Label fx:id="roomPosYLabel" text="PosY" GridPane.columnIndex="1"
+			GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+			<opaqueInsets>
+				<Insets />
+			</opaqueInsets>
+			<padding>
+				<Insets right="10.0" />
+			</padding>
+		</Label>
+		<Label text="Szörny!" GridPane.columnIndex="1"
+			GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+		<Label fx:id="playerGold" text="Gold" textAlignment="CENTER"
+			GridPane.columnIndex="1" GridPane.halignment="CENTER"
+			GridPane.rowIndex="4" GridPane.valignment="CENTER" />
 	</children>
 </GridPane>
