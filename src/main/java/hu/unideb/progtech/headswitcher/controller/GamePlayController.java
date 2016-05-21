@@ -57,7 +57,11 @@ public class GamePlayController implements Initializable {
 
 	@FXML
 	private void handleUp(ActionEvent event) {
-		GL.setNextRoomForNorth();
+		try {
+			GL.setNextRoomForNorth();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		GL.setRoomLabel(roomPosXLabel, roomPosYLabel);
 		GL.nextRoomTest(upButton, downButton, leftButton, rightButton);
 		GL.roomEventHandler(upButton, leftButton, rightButton, downButton, monsterHealthPoints, attackButton,
@@ -66,7 +70,11 @@ public class GamePlayController implements Initializable {
 
 	@FXML
 	private void handleDown(ActionEvent event) {
-		GL.setNextRoomForSouth();
+		try {
+			GL.setNextRoomForSouth();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		GL.setRoomLabel(roomPosXLabel, roomPosYLabel);
 		GL.nextRoomTest(upButton, downButton, leftButton, rightButton);
 		GL.roomEventHandler(upButton, leftButton, rightButton, downButton, monsterHealthPoints, attackButton,
@@ -75,7 +83,11 @@ public class GamePlayController implements Initializable {
 
 	@FXML
 	private void handleRight(ActionEvent event) {
-		GL.setNextRoomForEast();
+		try {
+			GL.setNextRoomForEast();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		GL.setRoomLabel(roomPosXLabel, roomPosYLabel);
 		GL.nextRoomTest(upButton, downButton, leftButton, rightButton);
 		GL.roomEventHandler(upButton, leftButton, rightButton, downButton, monsterHealthPoints, attackButton,
@@ -84,7 +96,11 @@ public class GamePlayController implements Initializable {
 
 	@FXML
 	private void handleLeft(ActionEvent event) {
-		GL.setNextRoomForWest();
+		try {
+			GL.setNextRoomForWest();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		GL.setRoomLabel(roomPosXLabel, roomPosYLabel);
 		GL.nextRoomTest(upButton, downButton, leftButton, rightButton);
 		GL.roomEventHandler(upButton, leftButton, rightButton, downButton, monsterHealthPoints, attackButton,

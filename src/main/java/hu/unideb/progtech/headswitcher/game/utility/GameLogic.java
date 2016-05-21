@@ -10,6 +10,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import hu.unideb.progtech.headswitcher.controller.MainMenuController;
+import hu.unideb.progtech.headswitcher.game.model.Adventurer;
+import hu.unideb.progtech.headswitcher.game.model.Monster;
+import hu.unideb.progtech.headswitcher.game.model.Room;
 import hu.unideb.progtech.headswitcher.main.MainApp;
 import hu.unideb.progtech.headswitcher.service.HighScoreServiceImpl;
 import hu.unideb.progtech.headswitcher.service.interfaces.HighScoreService;
@@ -70,7 +73,7 @@ public class GameLogic {
 
 	}
 
-	public void setNextRoomForWest() {
+	public void setNextRoomForWest() throws Exception {
 		Long newRoomPosX = actualRoom.getPosx() - 1;
 		if (rooms.stream()
 				.anyMatch(rs -> rs.getPosx().equals(newRoomPosX) && rs.getPosy().equals(actualRoom.getPosy())))
@@ -135,7 +138,7 @@ public class GameLogic {
 		}
 	}
 
-	public void setNextRoomForEast() {
+	public void setNextRoomForEast() throws Exception {
 
 		Long newRoomPosX = actualRoom.getPosx() + 1;
 		if (rooms.stream()
@@ -202,7 +205,7 @@ public class GameLogic {
 
 	}
 
-	public void setNextRoomForSouth() {
+	public void setNextRoomForSouth() throws Exception {
 		Long newRoomPosY = actualRoom.getPosy() - 1;
 		if (rooms.stream()
 				.anyMatch(rs -> rs.getPosx().equals(actualRoom.getPosx()) && rs.getPosy().equals(newRoomPosY)))
@@ -267,7 +270,7 @@ public class GameLogic {
 
 	}
 
-	public void setNextRoomForNorth() {
+	public void setNextRoomForNorth() throws Exception {
 
 		Long newRoomPosY = actualRoom.getPosy() + 1;
 		if (rooms.stream()

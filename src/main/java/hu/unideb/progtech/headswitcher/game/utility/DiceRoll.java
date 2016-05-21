@@ -10,13 +10,14 @@ public class DiceRoll {
 		r = new Random();
 	}
 
-	public int roll(int from, int until) {
-		int l = r.nextInt(until) + from;
-		return l;
-	}
-
-	public int rollDice() {
-		return r.nextInt(6) + 1;
+	public int roll(int from, int until) throws Exception {
+		if (from > until) {
+			Exception e = new Exception();
+			throw e;
+		} else {
+			int l = r.nextInt(until) + from;
+			return l;
+		}
 	}
 
 	public boolean rollBoolean() {

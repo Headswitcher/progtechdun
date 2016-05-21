@@ -1,4 +1,4 @@
-package hu.unideb.progtech.headswitcher.game.utility;
+package hu.unideb.progtech.headswitcher.game.model;
 
 public abstract class GameObject {
 
