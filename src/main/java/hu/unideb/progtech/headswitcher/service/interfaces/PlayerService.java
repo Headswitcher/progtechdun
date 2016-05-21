@@ -9,4 +9,8 @@ public interface PlayerService {
 	public void createPlayer(String username, String password);
 
 	public List<Player> getAllPlayer();
+
+	public Player findPlayerById(Long Id);
+
+	public void removePlayerById(Long Id);
 }

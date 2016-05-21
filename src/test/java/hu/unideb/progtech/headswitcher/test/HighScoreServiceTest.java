@@ -1,5 +1,7 @@
 package hu.unideb.progtech.headswitcher.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,16 +10,15 @@ import javax.persistence.Persistence;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import hu.unideb.progtech.headswitcher.entities.Player;
-import hu.unideb.progtech.headswitcher.service.PlayerServiceImpl;
-import hu.unideb.progtech.headswitcher.service.interfaces.PlayerService;
+import hu.unideb.progtech.headswitcher.entities.HighScore;
+import hu.unideb.progtech.headswitcher.service.HighScoreServiceImpl;
+import hu.unideb.progtech.headswitcher.service.interfaces.HighScoreService;
 
-public class PlayerServiceTest {
+public class HighScoreServiceTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -29,13 +30,14 @@ public class PlayerServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Oracle");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		try {
 
-			PlayerService playerService = new PlayerServiceImpl(entityManager);
+			HighScoreService hs = new HighScoreServiceImpl(entityManager);
 			entityManager.getTransaction().begin();
-			playerService.createPlayer("UnitTest", "tesztunithoz");
+			hs.createHighScore("Unit", 500L);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {
@@ -44,6 +46,7 @@ public class PlayerServiceTest {
 			entityManager.close();
 			entityManagerFactory.close();
 		}
+
 	}
 
 	@After
@@ -52,15 +55,16 @@ public class PlayerServiceTest {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		try {
 
-			PlayerService playerService = new PlayerServiceImpl(entityManager);
-			List<Player> plist = playerService.getAllPlayer();
+			HighScoreService hs = new HighScoreServiceImpl(entityManager);
+			List<HighScore> hsl = hs.getAllHighScore();
 			Long maxId = 0L;
-			for (Player player : plist) {
-				if (player.getId() > maxId)
-					maxId = player.getId();
+			for (HighScore highScore : hsl) {
+				if (highScore.getId() > maxId) {
+					maxId = highScore.getId();
+				}
 			}
 			entityManager.getTransaction().begin();
-			playerService.removePlayerById(maxId);
+			hs.removeHighScoreById(maxId);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {
@@ -69,22 +73,26 @@ public class PlayerServiceTest {
 			entityManager.close();
 			entityManagerFactory.close();
 		}
+
 	}
 
 	@Test
-	public void findById() {
+	public void findHighScoreById() {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Oracle");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		try {
 
-			PlayerService playerService = new PlayerServiceImpl(entityManager);
-			List<Player> plist = playerService.getAllPlayer();
+			HighScoreService hs = new HighScoreServiceImpl(entityManager);
+			List<HighScore> hsl = hs.getAllHighScore();
 			Long maxId = 0L;
-			for (Player player : plist) {
-				maxId = player.getId();
+			for (HighScore highScore : hsl) {
+				if (highScore.getId() > maxId) {
+					maxId = highScore.getId();
+				}
 			}
-
-			Assert.assertEquals(playerService.findPlayerById(maxId).getUsername(), "UnitTest");
+			entityManager.getTransaction().begin();
+			assertEquals(hs.findHighScoreById(maxId).getUsername(), "Unit");
+			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,7 +100,6 @@ public class PlayerServiceTest {
 			entityManager.close();
 			entityManagerFactory.close();
 		}
-
 	}
 
 }

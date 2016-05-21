@@ -9,4 +9,8 @@ public interface HighScoreService {
 	public void createHighScore(String username, Long gold);
 
 	public List<HighScore> getAllHighScore();
+	
+	public HighScore findHighScoreById(Long Id);
+	
+	public void removeHighScoreById(Long Id);
 }

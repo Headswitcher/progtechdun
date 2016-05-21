@@ -34,4 +34,19 @@ public class HighScoreServiceImpl implements HighScoreService {
 		return query.getResultList();
 	}
 
+	@Override
+	public HighScore findHighScoreById(Long Id) {
+		return entityManager.find(HighScore.class, Id);
+
+	}
+
+	@Override
+	public void removeHighScoreById(Long Id) {
+		HighScore hs = findHighScoreById(Id);
+		if (hs != null) {
+			entityManager.remove(hs);
+		}
+
+	}
+
 }

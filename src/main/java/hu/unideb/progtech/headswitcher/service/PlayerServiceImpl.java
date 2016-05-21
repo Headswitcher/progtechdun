@@ -33,4 +33,18 @@ public class PlayerServiceImpl implements PlayerService {
 		return query.getResultList();
 	}
 
+	@Override
+	public Player findPlayerById(Long Id) {
+		return entityManager.find(Player.class, Id);
+	}
+
+	@Override
+	public void removePlayerById(Long Id) {
+		Player player = findPlayerById(Id);
+		if (player != null) {
+			entityManager.remove(player);
+		}
+
+	}
+
 }
