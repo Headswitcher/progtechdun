@@ -30,13 +30,11 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Dun");
+		this.primaryStage.setResizable(false);
 		initRootLayout();
 		showLogin();
 	}
 
-	/**
-	 * Initializes the root layout.
-	 */
 	public void initRootLayout() {
 		try {
 			// Load root layout from fxml file.
@@ -52,9 +50,7 @@ public class MainApp extends Application {
 		}
 	}
 
-	/**
-	 * Shows the person overview inside the root layout.
-	 */
+	
 	public void showLogin() {
 		try {
 			// Load person overview.
@@ -69,11 +65,7 @@ public class MainApp extends Application {
 		}
 	}
 
-	/**
-	 * Returns the main stage.
-	 * 
-	 * @return
-	 */
+
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
