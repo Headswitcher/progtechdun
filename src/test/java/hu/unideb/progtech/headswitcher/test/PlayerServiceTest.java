@@ -70,9 +70,10 @@ public class PlayerServiceTest {
 			PlayerService playerService = new PlayerServiceImpl(entityManager);
 			List<Player> plist = playerService.getAllPlayer();
 			Long maxId = 0L;
-			for (Player player : plist) {
-				maxId = player.getId();
-			}
+			for (Player player : plist)
+				if (player.getId() > maxId)
+					maxId = player.getId();
+
 			entityManager.getTransaction().begin();
 
 			Assert.assertEquals("Unit", playerService.findPlayerById(maxId).getUsername());
