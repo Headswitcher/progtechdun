@@ -7,10 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import hu.unideb.progtech.headswitcher.entities.Player;
@@ -19,23 +17,15 @@ import hu.unideb.progtech.headswitcher.service.interfaces.PlayerService;
 
 public class PlayerServiceTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Oracle");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		try {
 
-			PlayerService playerService = new PlayerServiceImpl(entityManager);
+			PlayerService ps = new PlayerServiceImpl(entityManager);
 			entityManager.getTransaction().begin();
-			playerService.createPlayer("UnitTest", "tesztunithoz");
+			ps.createPlayer("Unit", "UnitTestPassword");
 			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {
@@ -83,8 +73,10 @@ public class PlayerServiceTest {
 			for (Player player : plist) {
 				maxId = player.getId();
 			}
+			entityManager.getTransaction().begin();
 
-			Assert.assertEquals(playerService.findPlayerById(maxId).getUsername(), "UnitTest");
+			Assert.assertEquals("Unit", playerService.findPlayerById(maxId).getUsername());
+			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {
 			e.printStackTrace();

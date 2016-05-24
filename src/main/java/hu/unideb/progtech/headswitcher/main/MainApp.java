@@ -37,11 +37,9 @@ public class MainApp extends Application {
 
 	public void initRootLayout() {
 		try {
-			// Load root layout from fxml file.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/fxml/root/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
-			// Show the scene containing the root layout.
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -53,12 +51,10 @@ public class MainApp extends Application {
 	
 	public void showLogin() {
 		try {
-			// Load person overview.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/fxml/menu/Login.fxml"));
 			AnchorPane login = (AnchorPane) loader.load();
 
-			// Set person overview into the center of root layout.
 			rootLayout.setCenter(login);
 		} catch (IOException e) {
 			e.printStackTrace();

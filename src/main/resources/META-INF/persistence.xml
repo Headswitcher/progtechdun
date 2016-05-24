@@ -11,9 +11,9 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
 			<property name="hibernate.connection.url"
-				value="jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g"/>
-			<property name="hibernate.connection.username" value="H_HL7FTW" />
-			<property name="hibernate.connection.password" value="kriss007	" />
+				value=""/>
+			<property name="hibernate.connection.username" value="" />
+			<property name="hibernate.connection.password" value="" />
 			<!-- <property name="hibernate.show_sql" value="true"/> -->
 			<property name="hibernate.flushMode" value="FLUSH_AUTO" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />

@@ -43,6 +43,7 @@ public class GameLogic {
 		rooms = new LinkedList<>();
 		actualRoom = new Room(0L, 0L, true, false, false, false, 0L, null, "nothing");
 		rooms.add(actualRoom);
+		rooms.add(new Room(0L, 1L, true, true, true, true, 2L, null, "nothing"));
 		player = new Adventurer(250L, 250L, 50L, 5L);
 		diceRoll = new DiceRoll();
 	}
@@ -130,11 +131,6 @@ public class GameLogic {
 				break;
 			}
 			}
-			System.out.println(north);
-			System.out.println(south);
-			System.out.println(west);
-			System.out.println(east);
-
 		}
 	}
 
@@ -197,10 +193,6 @@ public class GameLogic {
 				break;
 			}
 			}
-
-			System.out.println(rolledValue);
-			System.out.println(actualRoom.getEvent());
-
 		}
 
 	}
@@ -263,9 +255,6 @@ public class GameLogic {
 				break;
 			}
 			}
-
-			System.out.println(rolledValue);
-			System.out.println(actualRoom.getEvent());
 		}
 
 	}
@@ -284,7 +273,6 @@ public class GameLogic {
 				east = actualRoom.getEast();
 			}
 		else {
-
 			south = true;
 			north = diceRoll.rollBoolean();
 			west = diceRoll.rollBoolean();
@@ -310,7 +298,6 @@ public class GameLogic {
 				rooms.add(actualRoom);
 				break;
 			}
-
 			case 3: {
 				actualRoom = new Room(actualRoom.getPosx(), newRoomPosY, north, west, east, south,
 						actualRoom.getDepth() + 1, null, "nothing");
@@ -330,14 +317,10 @@ public class GameLogic {
 				break;
 			}
 			}
-
-			System.out.println(rolledValue);
-			System.out.println(actualRoom.getEvent());
-
 		}
 	}
 
-	private Monster spawnMonster() {
+	public Monster spawnMonster() {
 		Long hp = actualRoom.getDepth() * 20;
 		Long dmg = (long) (actualRoom.getDepth() * 1.4);
 		Long gold = actualRoom.getDepth() * 10;
@@ -416,9 +399,6 @@ public class GameLogic {
 				break;
 			}
 			}
-		} else {
-
-			System.out.println("nem kaphat null-t tho");
 		}
 	}
 
@@ -447,8 +427,9 @@ public class GameLogic {
 		}
 	}
 
-	public void attackIfPlayerDiesGoMainMenu(Label monsterHealthPoints, Label playerHealthPoints, Label playerDamage, Label playerGold,
-			Button attackButton, Button upButton, Button downButton, Button leftButton, Button rightButton) {
+	public void attackIfPlayerDiesGoMainMenu(Label monsterHealthPoints, Label playerHealthPoints, Label playerDamage,
+			Label playerGold, Button attackButton, Button upButton, Button downButton, Button leftButton,
+			Button rightButton) {
 		actualRoom.getRoomMonster().setHealthPoint(actualRoom.getRoomMonster().getHealthPoint() - player.getDamage());
 
 		if (actualRoom.getRoomMonster().getHealthPoint() > 0) {
@@ -507,7 +488,7 @@ public class GameLogic {
 
 	}
 
-	private void setHighScore() {
+	public void setHighScore() {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Oracle");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		try {
@@ -525,7 +506,7 @@ public class GameLogic {
 		}
 	}
 
-	private void addGoldToPlayer() {
+	public void addGoldToPlayer() {
 		player.setGold(player.getGold() + actualRoom.getRoomMonster().getGold());
 
 	}

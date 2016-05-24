@@ -1,6 +1,6 @@
 package hu.unideb.progtech.headswitcher.game.model;
 
-public class Room extends GameObject {
+public class Room {
 
 	private Long posx;
 	private Long posy;
